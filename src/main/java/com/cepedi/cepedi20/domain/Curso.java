@@ -1,20 +1,39 @@
 package com.cepedi.cepedi20.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Curso implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private double preco;
+	private Double preco;
 
+	@ManyToMany
+	@JoinTable(name = "CURSO_LINGUAGEM", 
+	joinColumns = @JoinColumn(name = "curso_id"),
+	inverseJoinColumns = @JoinColumn(name = "linguagem_id")
+	)
+	private List<Linguagem> linguagem = new ArrayList<>();
+	
 	public Curso() {
-
+		
 	}
 
-	public Curso(Integer id, String nome, double preco) {
+	public Curso(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -37,12 +56,20 @@ public class Curso implements Serializable {
 		this.nome = nome;
 	}
 
-	public double getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(double preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
+	}
+
+	public List<Linguagem> getLinguagem() {
+		return linguagem;
+	}
+
+	public void setLinguagem(List<Linguagem> linguagem) {
+		this.linguagem = linguagem;
 	}
 
 	@Override
@@ -69,5 +96,7 @@ public class Curso implements Serializable {
 			return false;
 		return true;
 	}
-
-}
+	
+	
+	
+}	

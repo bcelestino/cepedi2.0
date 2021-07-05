@@ -1,10 +1,17 @@
 package com.cepedi.cepedi20.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 @Entity
@@ -15,6 +22,11 @@ public class Linguagem implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id ;
 	private String nome;
+	
+	
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "linguagem")
+	private List<Curso> curso = new ArrayList<>();
 	
 	public Linguagem() {
 		
@@ -41,6 +53,15 @@ public class Linguagem implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public List<Curso> getCurso() {
+		return curso;
+	}
+
+	public void setCurso(List<Curso> curso) {
+		this.curso = curso;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -72,7 +93,8 @@ public class Linguagem implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+
 	
 
 }
