@@ -20,6 +20,7 @@ public class LinguagemResource {
 
 	@RequestMapping(value ="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
+
 		Linguagem obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 				
