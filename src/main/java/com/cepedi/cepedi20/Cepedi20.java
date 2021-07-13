@@ -8,11 +8,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cepedi.cepedi20.domain.Cidade;
+import com.cepedi.cepedi20.domain.Cliente;
 import com.cepedi.cepedi20.domain.Curso;
+import com.cepedi.cepedi20.domain.Endereço;
 import com.cepedi.cepedi20.domain.Estado;
 import com.cepedi.cepedi20.domain.Linguagem;
+import com.cepedi.cepedi20.domain.enums.TipoCliente;
 import com.cepedi.cepedi20.repositories.CidadeRepository;
+import com.cepedi.cepedi20.repositories.ClienteRepository;
 import com.cepedi.cepedi20.repositories.CursoRepository;
+import com.cepedi.cepedi20.repositories.EndereçoRepository;
 import com.cepedi.cepedi20.repositories.EstadoRepository;
 import com.cepedi.cepedi20.repositories.LinguagemRepository;
 
@@ -31,6 +36,12 @@ public class Cepedi20 implements CommandLineRunner {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
+	@Autowired
+	private EndereçoRepository endereçoRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	
 
 	public static void main(String[] args) {
@@ -57,6 +68,15 @@ public class Cepedi20 implements CommandLineRunner {
 		Cidade cd2 = new Cidade(null, "Itabuna", est2);
 		Cidade cd3 = new Cidade(null, "Ilheus", est2);
 		Cidade cd4 = new Cidade(null, "Belo horizonte",est3);
+		
+		Cliente cli1 = new Cliente(null, "bruna celestino", "celestino.b@hotmail", "44545485528", TipoCliente.PESSOAFISICA);
+		Cliente cli2 = new Cliente(null, "evellyn maria", "eve@hotmail", "445455555555", TipoCliente.PESSOAJURIDICA);
+		
+		cli1.getTelefone().addAll(Arrays.asList("4544545445","981525088"));
+		cli2.getTelefone().addAll(Arrays.asList("73981778023","73988387479"));
+		
+		Endereço e1 = new Endereço(null, " rua sol e mar", "003", "terreo","n senhora da vit","44570000", cli1, cd3);
+		Endereço e2 = new Endereço(null, " rua D", "104", "s/c","pq verde","45604882", cli2, cd2);
 
 		l1.getCurso().addAll(Arrays.asList(c3));
 		l2.getCurso().addAll(Arrays.asList(c2, c3));
@@ -72,12 +92,22 @@ public class Cepedi20 implements CommandLineRunner {
 		est2.getCidades().addAll(Arrays.asList(cd2,cd3));
 		est3.getCidades().addAll(Arrays.asList(cd4));
 		
+		cli1.getEndereços().addAll(Arrays.asList(e2));
+		cli2.getEndereços().addAll(Arrays.asList(e1));
 		
 		
 		estadoRepository.saveAll(Arrays.asList(est1, est2, est3));
 		cidadeRepository.saveAll(Arrays.asList(cd1, cd2, cd3, cd4));
 		linguagemRepository.saveAll(Arrays.asList(l1, l2, l3, l4));
 		cursoRespository.saveAll(Arrays.asList(c1, c2, c3));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		endereçoRepository.saveAll(Arrays.asList(e1,e2));
+		
+		
+		
+		
+		
+		
 	}
 
 }
